@@ -115,6 +115,11 @@
             <th>Subject</th>
             <th>Score</th>
         </tr>
+        <tr th:each="grade: ${grade}">
+            <td th:text = "${grade.name}"></td>
+            <td th:text = "${grade.subject}">portions</td>
+            <td th:text = "${grade.score}">c-</td>
+        </tr>
     </table>
 </div>
 
