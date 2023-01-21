@@ -10,6 +10,9 @@ public class Grade {
         this.subject = subject;
         this.score = score;
     }
+    public Grade(){
+        System.out.println("random");
+    }
 
     public String getName() {
         return name;
@@ -35,7 +38,11 @@ public class Grade {
         this.score = score;
     }
 
-    public Grade(){
-
-    }
+    //to check if submitted details are updates
+//    @Override
+//    public String toString() {
+//       return "{"+
+//               "name'" +getName()+"'"+
+//        "}";
+//    }
 }
