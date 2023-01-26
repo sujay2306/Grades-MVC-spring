@@ -1,5 +1,8 @@
-package com.sujay.gradesubmission;
+package com.sujay.gradesubmission.controller;
 
+import com.sujay.gradesubmission.Constants;
+import com.sujay.gradesubmission.Grade;
+import com.sujay.gradesubmission.repository.GradeRepository;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,7 +20,7 @@ import java.util.List;
 @Controller
 public class GradeController {
 
-    List<Grade> studentGrades = new ArrayList<>();
+    GradeRepository gradeRepository = new GradeRepository();
     @GetMapping("/")
     public String getForm(Model model , @RequestParam(required = false) String id){
         int index = getGradeIndex(id);
