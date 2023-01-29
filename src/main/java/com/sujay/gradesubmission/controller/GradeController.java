@@ -3,6 +3,7 @@ package com.sujay.gradesubmission.controller;
 import com.sujay.gradesubmission.Constants;
 import com.sujay.gradesubmission.Grade;
 import com.sujay.gradesubmission.repository.GradeRepository;
+import com.sujay.gradesubmission.service.GradeService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,43 +20,25 @@ import java.util.List;
 
 @Controller
 public class GradeController {
-
-    GradeRepository gradeRepository = new GradeRepository();
+    GradeService gradeService = new GradeService();
     @GetMapping("/")
     public String getForm(Model model , @RequestParam(required = false) String id){
-        int index = getGradeIndex(id);
-        model.addAttribute("grade", index == Constants.NOT_FOUND ? new Grade(): gradeRepository..getGrade(index));
+        model.addAttribute("grade", gradeService.getGradeById(id));
         return "form";
     }
-
     @PostMapping("/handleSubmit")
     public String submitForm(@Valid Grade grade , BindingResult result){   //creats a object and uses our grades empty constructor and setters to update details
         System.out.println("has errors?: " + result.hasErrors());
         if(result.hasErrors()){
             return "form";
         }
-       int index = getGradeIndex(grade.getId());
-       if(index == Constants.NOT_FOUND){
-           gradeRepository.addGrade(grade); //addGrade is a function call from repo
-       }
-       else{
-           gradeRepository.updateGrade(grade, index);// adds details which is submitted
-       }
+        gradeService.submitGrade(grade);
         return "redirect:/grades";
     }
     @GetMapping("/grades")
     public String getGrades(Model model){
-        model.addAttribute("grades",gradeRepository.getGrades());
+        model.addAttribute("grades",gradeService.getGrades());
         return "grades";
-    }
-
-
-
-    public Integer getGradeIndex(String id){
-        for (int i=0; i< gradeRepository.getGrades().size(); i++){
-            if(gradeRepository.getGrades().get(i).getId().equals(id)) return i;
-        }
-        return  Constants.NOT_FOUND;
     }
 
 }

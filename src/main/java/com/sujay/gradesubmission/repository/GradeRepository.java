@@ -18,7 +18,7 @@ public class GradeRepository {
    }
 
    public  List<Grade> getGrades(){
-         return  studentGrades
+         return  studentGrades;
    }
 
 }
