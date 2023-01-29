@@ -24,7 +24,7 @@ public class GradeController {
     @GetMapping("/")
     public String getForm(Model model , @RequestParam(required = false) String id){
         int index = getGradeIndex(id);
-        model.addAttribute("grade", index == Constants.NOT_FOUND ? new Grade(): studentGrades.get(index));
+        model.addAttribute("grade", index == Constants.NOT_FOUND ? new Grade(): gradeRepository..getGrade(index));
         return "form";
     }
 
@@ -36,24 +36,24 @@ public class GradeController {
         }
        int index = getGradeIndex(grade.getId());
        if(index == Constants.NOT_FOUND){
-           studentGrades.add(grade);
+           gradeRepository.addGrade(grade); //addGrade is a function call from repo
        }
        else{
-           studentGrades.set(index,grade);// adds details which is submitted
+           gradeRepository.updateGrade(grade, index);// adds details which is submitted
        }
         return "redirect:/grades";
     }
     @GetMapping("/grades")
     public String getGrades(Model model){
-        model.addAttribute("grades",studentGrades);
+        model.addAttribute("grades",gradeRepository.getGrades());
         return "grades";
     }
 
 
 
     public Integer getGradeIndex(String id){
-        for (int i=0; i< studentGrades.size(); i++){
-            if(studentGrades.get(i).getId().equals(id)) return i;
+        for (int i=0; i< gradeRepository.getGrades().size(); i++){
+            if(gradeRepository.getGrades().get(i).getId().equals(id)) return i;
         }
         return  Constants.NOT_FOUND;
     }
