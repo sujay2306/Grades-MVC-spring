@@ -2,10 +2,12 @@ package com.sujay.gradesubmission.service;
 import com.sujay.gradesubmission.Constants;
 import com.sujay.gradesubmission.Grade;
 import com.sujay.gradesubmission.repository.GradeRepository;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class GradeService {
     GradeRepository gradeRepository = new GradeRepository();
 

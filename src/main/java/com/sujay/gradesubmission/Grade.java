@@ -1,9 +1,5 @@
 package com.sujay.gradesubmission;
-
 import jakarta.validation.constraints.NotBlank;
-
-
-
 import java.util.UUID;
 
 public class Grade {

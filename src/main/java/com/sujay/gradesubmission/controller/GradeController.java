@@ -5,6 +5,8 @@ import com.sujay.gradesubmission.Grade;
 import com.sujay.gradesubmission.repository.GradeRepository;
 import com.sujay.gradesubmission.service.GradeService;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -20,12 +22,14 @@ import java.util.List;
 
 @Controller
 public class GradeController {
-    GradeService gradeService = new GradeService();
+    @Autowired
+    GradeService gradeService;
     @GetMapping("/")
     public String getForm(Model model , @RequestParam(required = false) String id){
         model.addAttribute("grade", gradeService.getGradeById(id));
         return "form";
     }
+
     @PostMapping("/handleSubmit")
     public String submitForm(@Valid Grade grade , BindingResult result){   //creats a object and uses our grades empty constructor and setters to update details
         System.out.println("has errors?: " + result.hasErrors());
